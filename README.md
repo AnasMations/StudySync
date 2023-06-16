@@ -1,4 +1,4 @@
-# Studysync 📚✨
+# Study Sync 📚✨
 
 ## Description
 
