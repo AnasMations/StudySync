@@ -2,7 +2,8 @@ from typing import Tuple
 from youtube_transcript_api import YouTubeTranscriptApi
 
 
-def generate_transcript(id: str) -> Tuple[str, int]:
+def generate_transcript(link: str) -> Tuple[str, int]:
+    id=link[link.rfind("v=")+2:]
     try:
         transcript = YouTubeTranscriptApi.get_transcript(id)
         script = ""
@@ -15,7 +16,6 @@ def generate_transcript(id: str) -> Tuple[str, int]:
         return None , None
 
 
-id = "N2PpRnFqnqY"
-transcript, no_of_words = generate_transcript(id)
 
-print(transcript)
+
+

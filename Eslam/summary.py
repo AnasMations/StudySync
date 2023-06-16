@@ -30,8 +30,9 @@ def answer(gen_type: str, style:str, text:str)-> str:
         chat = ChatOpenAI(temperature=0.2, model="gpt-3.5-turbo", openai_api_key=key)
 
         template_string = """"
-        You are given material extracted from {style}, genrate a {gen_type} from the text genrated from this material .
+        You are given material extracted from {style}, genrate {gen_type} from the text genrated from this material .
         text:{text} 
+                
         """
         prompt_template = ChatPromptTemplate.from_template(template_string)
 
@@ -41,7 +42,3 @@ def answer(gen_type: str, style:str, text:str)-> str:
 
         customer_response = chat(message)
         return customer_response.content
-    
-    
-  
-print(answer(gen_type=gen_type[-1],style=style[-1],text=text))
