@@ -1,8 +1,7 @@
-from typing import Tuple
 from youtube_transcript_api import YouTubeTranscriptApi
 
 
-def generate_transcript(link: str) -> Tuple[str, int]:
+def generate_transcript(link: str):
     id=link[link.rfind("v=")+2:]
     try:
         transcript = YouTubeTranscriptApi.get_transcript(id)

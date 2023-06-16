@@ -1,4 +1,8 @@
 import streamlit as st
+import sys
+
+sys.path.insert(1, 'Eslam')
+from main import GenerateSummary
 
 st.set_page_config(page_title="Study Sync", page_icon=":open_book:")
 
@@ -93,15 +97,17 @@ def FEATURES():
     </style>
     """
 
+    st.subheader("Features")
     st.markdown(style, unsafe_allow_html=True)
 
     features = [
-        {"title": "User-friendly Interface", "emoji": "🌟", "desc": "StudySync offers an intuitive and engaging user interface designed using Streamlit. It ensures a smooth and enjoyable user experience throughout the application."},
-        {"title": "Study Material Input", "emoji": "📚", "desc": "Users can easily input their study materials through various options, including text input or file upload. This flexibility allows users to seamlessly integrate their existing study resources into StudySync."},
-        {"title": "Automatic Summarization", "emoji": "✂️", "desc": "Studysync employs the power of ChatGPT to automatically generate concise summaries of study materials. This feature saves time and effort by condensing lengthy content into key points for quick comprehension."},
-        {"title": "Flashcards Generation", "emoji": "🃏", "desc": "With StudySync, users can create interactive flashcards from important concepts within their study materials. Flashcards serve as effective tools for reinforcing knowledge and facilitating active recall."},
-        {"title": "Test Question Generation", "emoji": "✅", "desc": "Studysync generates diverse test questions for self-assessment purposes. These questions cover various topics, ensuring comprehensive understanding and preparation for exams or assessments."},
-        {"title": "Video Summaries", "emoji": "🎥", "desc": "Studysync leverages the capabilities of Langchain to produce engaging video summaries of study materials. These video summaries provide an alternative medium for reviewing content and enhancing the learning experience."}
+        {"title": "User-friendly Interface", "emoji": "🌟", "desc": "Study Sync offers an intuitive and engaging user interface designed using Streamlit. It ensures a smooth and enjoyable user experience throughout the application."},
+        {"title": "Study Material Input", "emoji": "📚", "desc": "Users can easily input their study materials through various options, including text input or file upload. This flexibility allows users to seamlessly integrate their existing study resources into Study Sync."},
+        {"title": "Automatic Summarization", "emoji": "✂️", "desc": "Study Sync employs the power of ChatGPT to automatically generate concise summaries of study materials. This feature saves time and effort by condensing lengthy content into key points for quick comprehension."},
+        {"title": "Flashcards Generation", "emoji": "🃏", "desc": "With Study Sync, users can create interactive flashcards from important concepts within their study materials. Flashcards serve as effective tools for reinforcing knowledge and facilitating active recall."},
+        {"title": "Test Question Generation", "emoji": "✅", "desc": "Study Sync generates diverse test questions for self-assessment purposes. These questions cover various topics, ensuring comprehensive understanding and preparation for exams or assessments."},
+        {"title": "Video Summaries", "emoji": "🎥", "desc": "Study Sync leverages the capabilities of Langchain to produce engaging video summaries of study materials. These video summaries provide an alternative medium for reviewing content and enhancing the learning experience."},
+        {"title": "Mind Maps", "emoji": "🧠", "desc": "Study Sync leverages the capabilities of Langchain to produce Mind maps of study materials. These mind maps provide a structued outline for your study"}
     ]
 
     # Iterate through the features and display each one in a rectangle-box
@@ -111,29 +117,51 @@ def FEATURES():
         with st.expander(feature["emoji"]+" "+feature["title"]):
             st.markdown(f'<div class="feature-box"><h3>{feature["title"]}</h3><p>{feature["desc"]}</p></div>', unsafe_allow_html=True)
 
-def GET_STARTED():
+
+
+def GENERATE():
     """
     This function displays the get started section of the web app.
     """
 
     st.subheader("Get Started")
-    uploaded_file = st.file_uploader('')
 
-    if uploaded_file:
-        # Perform operations on the uploaded file
-        content = uploaded_file.read()
-        if st.button("Generate"):
-            FEATURES()
-            st.experimental_rerun()
-            st.balloons()
+    # Dropdown for input_type
+    input_options = ['Choose Input Type', 'Presentation slides', '.PDF', 'Video transcript', 'Question']
+    input_selection = st.selectbox('Select Input Type:', input_options)
+    input_type = input_options.index(input_selection)-1
 
+    # Dropdown for output_type
+    output_options = ['Choose Output Type', 'Questions and Answers', 'Multiple choice questions', 'Summarization', 'Bullet points']
+    output_selection = st.selectbox('Select Output Type:', output_options)
+    output_type = output_options.index(output_selection)-1
 
+    if input_type == 0 or input_type == 1: # Presentation slides or .PDF
+        uploaded_file = st.file_uploader('')
+        if uploaded_file:
+            content = uploaded_file.read()
+            if st.button("Generate"):
+                st.write("Generating Summary...")
+                st.write(GenerateSummary(input_type, output_type, content))
 
+    elif input_type == 2: # Video transcript
+        url = st.text_input("Enter the URL of the video:")
+        if url:
+            if st.button("Generate"):
+                st.write("Generating Summary...")
+                st.write(GenerateSummary(input_type, output_type, url))
+
+    elif input_type == 3: # Question
+        user_input = st.text_input("Enter study topic:")
+        if user_input:
+            if st.button("Generate"):
+                st.write("Generating Summary...")
+                st.write(GenerateSummary(input_type, output_type, user_input))
 
 ############################
 # CALL SECTIONS
 ############################
 style()
 HEADER()
+GENERATE()
 FEATURES()
-GET_STARTED()
