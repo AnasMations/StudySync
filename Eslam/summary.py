@@ -1,27 +1,43 @@
 import os
 import openai
+from langchain.chat_models import ChatOpenAI
+from langchain.prompts import ChatPromptTemplate
+
 from dotenv import find_dotenv, load_dotenv
 
 _ = load_dotenv(find_dotenv())  # read local .env file
-openai.api_key = os.environ["OPENAI_API_KEY"]
+key = os.environ["OPENAI_API_KEY"]
 
 
-def get_completion(prompt, model="gpt-3.5-turbo"):
-    messages = [{"role": "user", "content": prompt}]
-    response = openai.ChatCompletion.create(
-        model=model, messages=messages, temperature=0, max_tokens=300 , n=1
-    )
-    return response.choices[0].message["content"]
+chat = ChatOpenAI(temperature=0.2, model="gpt-3.5-turbo", openai_api_key=key)
+
+template_string = """"
+You are given material in the format of {style}, genrate a {gen_type} from the text genrated from this material .
+text:{text} 
+"""
 
 
+gen_type = [
+    "questions and answers",
+    "multiple choice questions",
+    "explaination as if you are a teacher",
+    "bullet points summary",
+]
+style = [
+    "an educational Presentation slides",
+    "an educational Presentation slides",
+    "a pdf",
+    "user question",
+]
+text = "Computer science and its part in geology"
 
 
-ans = get_completion(
-    f"""
-               
-               Genretate a summary of the video transcript in the format of a 5 multiple choice questions.
-               transcript: {transcript}
-               """
+prompt_template = ChatPromptTemplate.from_template(template_string)
+
+customer_messages = prompt_template.format_messages(
+    gen_type=gen_type[-1], style=style[-1], text=text
 )
 
-print(ans)
+
+customer_response = chat(customer_messages)
+print(customer_response.content)
