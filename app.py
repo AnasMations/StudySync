@@ -6,7 +6,7 @@ def style():
     st.markdown(
         """
         <style>
-            [data-testid="stReportViewContainer"] {
+            [data-testid="stAppViewContainer"] {
                 background: linear-gradient(220deg, #fbeaf7,#ffffff, #dfeefb);
                 color: black;
             }
