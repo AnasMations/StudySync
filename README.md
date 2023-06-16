@@ -1,5 +1,5 @@
 # Study Sync 📚✨
-
+[Try out Study Sync!](https://study-sync.streamlit.app/)
 ## Description
 
 StudySync is a Study Companion Application developed for a Langchain 2023 Hackathon. Its objective is to automate the creation of personalized study materials, providing users with a comprehensive and efficient studying experience. 🎉🔬
