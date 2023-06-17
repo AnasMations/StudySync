@@ -7,18 +7,15 @@ import streamlit as st
 
 def answer(gen_type: str, style:str, text:str)-> str:
     try:
-        key = st.secrets["OPENAI_API_KEY"]
+        _ = load_dotenv(find_dotenv())  # read local .env file
+        key = os.environ["OPENAI_API_KEY"]
     except:
-        try:
-            _ = load_dotenv(find_dotenv())  # read local .env file
-            key = os.environ["OPENAI_API_KEY"]
-        except:
-            return None
+        return None
       
     chat = ChatOpenAI(temperature=0.1, model="gpt-3.5-turbo", openai_api_key=key, max_tokens=500)
 
     template_string = """"
-    You are given material extracted from {style}, genrate {gen_type} from the text genrated from this material .
+    You are given material extracted from {style}, genrate {gen_type} from the text genrated from this material with maximum 800 words.
     text:{text} 
             
     """

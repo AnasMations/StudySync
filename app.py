@@ -1,9 +1,11 @@
 import streamlit as st
 import sys
+import PyPDF2
+from pptx import Presentation
 
 sys.path.insert(1, 'Eslam')
 sys.path.insert(2, 'mariam')
-from main import GenerateSummary
+from Eslam_main import GenerateSummary
 
 st.set_page_config(page_title="Study Sync", page_icon=":open_book:")
 
@@ -138,20 +140,47 @@ def GENERATE():
     output_selection = st.selectbox('Select Output Type:', output_options)
     output_type = output_options.index(output_selection)-1
 
-    if input_type == 0 or input_type == 1: # Presentation slides or .PDF
+    if input_type == 0: #presentation         
         uploaded_file = st.file_uploader('')
-        if uploaded_file:
-            content = uploaded_file.read()
+
+        if uploaded_file is not None:
+
+            content = ""
+            presentation = Presentation(uploaded_file)
+
+            for slide in presentation.slides:
+                for shape in slide.shapes:
+                    if shape.has_text_frame:
+                        for paragraph in shape.text_frame.paragraphs:
+                            for run in paragraph.runs:
+                                content += run.text
             if st.button("Generate"):
                 with st.spinner(text="Generating Summary..."):
-                    st.write(GenerateSummary(input_type, output_type, user_input))
+                    st.write(GenerateSummary(input_type, output_type, content))
+    
+    elif input_type == 1: # Presentation
+        
+        uploaded_file = st.file_uploader('')
+
+        if uploaded_file is not None:
+            content = ""
+            
+            reader = PyPDF2.PdfReader(uploaded_file)
+            num_pages = len(reader.pages)
+
+            for page in range(num_pages):
+                page_obj = reader.pages[page]
+                content += page_obj.extract_text()
+            if st.button("Generate"):
+                with st.spinner(text="Generating Summary..."):
+                    st.write(GenerateSummary(input_type, output_type, content))
 
     elif input_type == 2: # Video transcript
         url = st.text_input("Enter the URL of the video:")
         if url:
             if st.button("Generate"):
                 with st.spinner(text="Generating Summary..."):
-                    st.write(GenerateSummary(input_type, output_type, user_input))
+                    st.write(GenerateSummary(input_type, output_type, url))
 
     elif input_type == 3: # Question
         user_input = st.text_input("Enter study topic:")
