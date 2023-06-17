@@ -1,4 +1,5 @@
-# Study Sync 📚✨
+# Study Sync 📚
+Let's sync up and study smarter!✨ 
 [Try out Study Sync!](https://study-sync.streamlit.app/)
 ## Description
 
