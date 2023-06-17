@@ -2,6 +2,7 @@ import streamlit as st
 import sys
 
 sys.path.insert(1, 'Eslam')
+sys.path.insert(2, 'mariam')
 from main import GenerateSummary
 
 st.set_page_config(page_title="Study Sync", page_icon=":open_book:")
@@ -57,6 +58,7 @@ def HEADER():
     '''
     This function displays the header section of the web app.
     '''
+
     # Create a container layout
     container = st.container()
 
@@ -141,22 +143,22 @@ def GENERATE():
         if uploaded_file:
             content = uploaded_file.read()
             if st.button("Generate"):
-                st.write("Generating Summary...")
-                st.write(GenerateSummary(input_type, output_type, content))
+                with st.spinner(text="Generating Summary..."):
+                    st.write(GenerateSummary(input_type, output_type, user_input))
 
     elif input_type == 2: # Video transcript
         url = st.text_input("Enter the URL of the video:")
         if url:
             if st.button("Generate"):
-                st.write("Generating Summary...")
-                st.write(GenerateSummary(input_type, output_type, url))
+                with st.spinner(text="Generating Summary..."):
+                    st.write(GenerateSummary(input_type, output_type, user_input))
 
     elif input_type == 3: # Question
         user_input = st.text_input("Enter study topic:")
         if user_input:
             if st.button("Generate"):
-                st.write("Generating Summary...")
-                st.write(GenerateSummary(input_type, output_type, user_input))
+                with st.spinner(text="Generating Summary..."):
+                    st.write(GenerateSummary(input_type, output_type, user_input))
 
 ############################
 # CALL SECTIONS

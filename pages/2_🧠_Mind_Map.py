@@ -7,6 +7,7 @@ import networkx as nx
 import streamlit as st
 from streamlit.delta_generator import DeltaGenerator
 import os
+import sys
 import openai
 import graphviz
 from dataclasses import dataclass, asdict
@@ -336,7 +337,7 @@ def main():
     </style>
     """, unsafe_allow_html=True)
     
-    st.sidebar.image('logo.png', width=150)
+    st.sidebar.image("https://raw.githubusercontent.com/AnasMations/StudySync/main/img/Study%20Sync.png", width=200)
 
     st.sidebar.title("StudySync AI Mind Map Generator")
 
