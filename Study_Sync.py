@@ -2,6 +2,7 @@ import streamlit as st
 import sys
 import PyPDF2
 from pptx import Presentation
+import webbrowser
 
 sys.path.insert(1, 'Eslam')
 sys.path.insert(2, 'mariam')
@@ -21,7 +22,8 @@ def style():
             
 
         div.stButton > button:first-child {
-            font-size: 24px;
+            font-size: 28px;
+            font-weight: bold;
             padding: 16px 32px;
             background-color: #FFFFFF;
             color: #262730;
@@ -122,78 +124,18 @@ def FEATURES():
         with st.expander(feature["emoji"]+" "+feature["title"]):
             st.markdown(f'<div class="feature-box"><h3>{feature["title"]}</h3><p>{feature["desc"]}</p></div>', unsafe_allow_html=True)
 
-
-
-def GENERATE():
+def GET_STARTED():
     """
     This function displays the get started section of the web app.
     """
 
-    st.subheader("Get Started")
-
-    # Dropdown for input_type
-    input_options = ['Choose Input Type', 'Presentation slides', '.PDF', 'Video transcript', 'Question']
-    input_selection = st.selectbox('Select Input Type:', input_options)
-    input_type = input_options.index(input_selection)-1
-
-    # Dropdown for output_type
-    output_options = ['Choose Output Type', 'Questions and Answers', 'Multiple choice questions', 'Summarization', 'Bullet points']
-    output_selection = st.selectbox('Select Output Type:', output_options)
-    output_type = output_options.index(output_selection)-1
-
-    if input_type == 0: #presentation         
-        uploaded_file = st.file_uploader('')
-
-        if uploaded_file is not None:
-
-            content = ""
-            presentation = Presentation(uploaded_file)
-
-            for slide in presentation.slides:
-                for shape in slide.shapes:
-                    if shape.has_text_frame:
-                        for paragraph in shape.text_frame.paragraphs:
-                            for run in paragraph.runs:
-                                content += run.text
-            if st.button("Generate"):
-                with st.spinner(text="Generating Summary..."):
-                    st.write(GenerateSummary(input_type, output_type, content))
-    
-    elif input_type == 1: # Pdf
-        
-        uploaded_file = st.file_uploader('')
-
-        if uploaded_file is not None:
-            content = ""
-            
-            reader = PyPDF2.PdfReader(uploaded_file)
-            num_pages = len(reader.pages)
-
-            for page in range(num_pages):
-                page_obj = reader.pages[page]
-                content += page_obj.extract_text()
-            if st.button("Generate"):
-                with st.spinner(text="Generating Summary..."):
-                    st.write(GenerateSummary(input_type, output_type, content))
-
-    elif input_type == 2: # Video transcript
-        url = st.text_input("Enter the URL of the video:")
-        if url:
-            if st.button("Generate"):
-                with st.spinner(text="Generating Summary..."):
-                    st.write(GenerateSummary(input_type, output_type, url))
-
-    elif input_type == 3: # Question
-        user_input = st.text_input("Enter study topic:")
-        if user_input:
-            if st.button("Generate"):
-                with st.spinner(text="Generating Summary..."):
-                    st.write(GenerateSummary(input_type, output_type, user_input))
+    if st.button("Get Started"):
+        webbrowser.open("https://study-sync.streamlit.app/App")
 
 ############################
 # CALL SECTIONS
 ############################
 style()
 HEADER()
-GENERATE()
 FEATURES()
+GET_STARTED()

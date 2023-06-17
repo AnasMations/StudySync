@@ -5,14 +5,14 @@ from dotenv import find_dotenv, load_dotenv
 import streamlit as st
 
 
-def answer(gen_type: str, style:str, text:str)-> str:
+def answer(gen_type: str, style:str, text:str, tokens:int)-> str:
     try:
         _ = load_dotenv(find_dotenv())  # read local .env file
         key = os.environ["OPENAI_API_KEY"]
     except:
         return None
       
-    chat = ChatOpenAI(temperature=0.1, model="gpt-3.5-turbo", openai_api_key=key, max_tokens=500)
+    chat = ChatOpenAI(temperature=0.1, model="gpt-3.5-turbo", openai_api_key=key, max_tokens=tokens)
 
     template_string = """"
     You are given material extracted from {style}, genrate {gen_type} from the text genrated from this material with maximum 800 words.
