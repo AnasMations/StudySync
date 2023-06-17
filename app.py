@@ -131,7 +131,7 @@ def GET_STARTED():
 
     if st.button("Get Started"):
         st.balloons()
-        st.markdown("Click on **Generate** or **Mind Map** from the left sidebar to get generating!")
+        st.markdown("Click on **Generate** or **Mind Map** from the left sidebar to start generating!")
         webbrowser.open("https://study-sync.streamlit.app/Generate")
 
 ############################
