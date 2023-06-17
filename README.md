@@ -18,6 +18,17 @@ StudySync is a Study Companion Application developed for a Langchain 2023 Hackat
 
 - **Video Summaries** 🎥📚: Studysync leverages the capabilities of Langchain to produce engaging video summaries of study materials. These video summaries provide an alternative medium for reviewing content and enhancing the learning experience.
 
+## Tools Used
+Study Sync utilizes the following tools:
+
+- **Python:** The application is developed using the Python programming language.
+
+- **Langchain:** Langchain, a powerful natural language processing library, is used to generate video summaries. The prompt template feature in Langchain allowed us to define structured prompts for generating video summaries based on the study materials. This approach was highly useful as it provided a consistent and predictable format for video summaries, ensuring high-quality output.
+
+- **Streamlit:** StudySync leverages Streamlit, a powerful Python framework, to build the user interface and create a seamless user experience. Streamlit enables the easy development of interactive web applications with minimal effort.
+
+- **OpenAI GPT API:** ChatGPT, powered by the OpenAI GPT API, is utilized for automatic summarization and generating test questions.
+
 ## Conclusion
 
 StudySync is an innovative Study Companion Application developed specifically for the two-day hackathon. By automating the creation of personalized study materials, Studysync empowers users to optimize their study efforts and achieve academic success. 🚀🎓 During the hackathon, the primary focus will be on implementing the core features and ensuring their functionality, laying the foundation for a robust and efficient study companion. Let's sync up and study smarter with StudySync! 💪💻
