@@ -92,6 +92,8 @@ def FEATURES():
     This function displays the features section of the web app.
     '''
 
+    st.write("Study Sync aspires to revolutionize studying by enabling students to sync up and study smarter with AI-backed assistance and mind maps. With its innovative design, robust features, and flexible business model, we will make studying enjoyable again! 🚀🎓")
+
     # Style for the individual feature boxes
     style = """
     <style>
@@ -104,7 +106,6 @@ def FEATURES():
         }}
     </style>
     """
-
     st.subheader("Features")
     st.markdown(style, unsafe_allow_html=True)
 
