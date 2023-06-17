@@ -130,9 +130,7 @@ def GET_STARTED():
     """
 
     if st.button("Get Started"):
-        st.balloons()
-        st.write("From the left side bar choose App or Mind Map to get started!")
-        #webbrowser.open("https://study-sync.streamlit.app/App")
+        webbrowser.open("https://study-sync.streamlit.app/Generate")
 
 ############################
 # CALL SECTIONS

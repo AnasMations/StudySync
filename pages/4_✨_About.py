@@ -5,7 +5,7 @@ def about_section():
     st.markdown(
         """
         <div style="background-color:#f9f9f9;padding:20px;border-radius:10px;">
-            <h1 style="text-align:center;color:#333;">Welcome to Our Awesome App!</h1>
+            <h1 style="text-align:center;color:#333;">Meet the team!</h1>
             <p style="text-align:center;font-size:18px;color:#666;">
                 We are a team of 3 passionate individuals dedicated to creating amazing software.
                 Our goal is to provide innovative solutions to everyday problems and deliver
