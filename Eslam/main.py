@@ -38,26 +38,13 @@ def GenerateSummary(input_type = 0, output_type = 0, input = None):
 
     return response
 
-# style_choice = styles[2]
 
-# gen_type_choice = gen_types[2]
-
-# response = None
-
-# if style_choice == styles[0] or style_choice == styles[1]:
-#     pass
-
-
-# elif style_choice == styles[2]:
     
-#     video_link = "https://www.youtube.com/watch?v=N2PpRnFqnqY" # an example link
-#     transcript, no_of_words = generate_transcript(video_link)
-#     response = answer(gen_type=gen_type_choice, style=style_choice, text=transcript)
-#     print(response)
+#video_link = "https://www.youtube.com/watch?v=N2PpRnFqnqY" # an example link
+#transcript, no_of_words = generate_transcript(video_link)
+#response = answer(gen_type=gen_type_choice, style=style_choice, text=transcript)
+#print(response)
 
 
-# elif style_choice == styles[3]:
-#     user_input = "Computer science and its part in geology"
-#     response = answer(gen_type=gen_type_choice, style=style_choice, text=user_input)
 
 

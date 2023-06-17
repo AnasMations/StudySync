@@ -4,22 +4,6 @@ from langchain.prompts import ChatPromptTemplate
 from dotenv import find_dotenv, load_dotenv
 import streamlit as st
 
-gen_type = [
-    "questions and answers",
-    "multiple choice questions",
-    "explaination as if you are a teacher",
-    "bullet points summary",
-]
-
-style = [
-    "an educational Presentation slides",
-    "a video",
-    "a pdf",
-    "a user question",
-    "a text",
-]
-
-text = "Computer science and its part in geology"
 
 def answer(gen_type: str, style:str, text:str)-> str:
     try:
@@ -31,7 +15,7 @@ def answer(gen_type: str, style:str, text:str)-> str:
         except:
             return None
       
-    chat = ChatOpenAI(temperature=0.2, model="gpt-3.5-turbo", openai_api_key=key, max_tokens=250)
+    chat = ChatOpenAI(temperature=0.1, model="gpt-3.5-turbo", openai_api_key=key, max_tokens=500)
 
     template_string = """"
     You are given material extracted from {style}, genrate {gen_type} from the text genrated from this material .
