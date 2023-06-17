@@ -1,6 +1,9 @@
 # Study Sync 📚
 Let's sync up and study smarter!✨   
 [Try out Study Sync!](https://study-sync.streamlit.app/)
+
+
+![logo](https://github.com/Eslam21/StudySync/blob/main/img/Study%20Sync.png?raw=true)
 ## Description
 
 StudySync is a Study Companion Application developed for a Langchain 2023 Hackathon. Its objective is to automate the creation of personalized study materials, providing users with a comprehensive and efficient studying experience. 🎉🔬
