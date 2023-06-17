@@ -16,10 +16,11 @@ from streamlit_agraph import agraph, Node, Edge, Config
 from dotenv import load_dotenv, find_dotenv
 
 # set title of page (will be seen in tab) and the width
-st.set_page_config(page_title="AI Mind Maps", layout="wide")
+st.set_page_config(page_title="AI Mindmap", page_icon="img\icon.png", layout="wide")
 
 COLOR = "#6dbbbd"
 FOCUS_COLOR = "#b9359a"
+EDGE_COLOR = "#b9359a"
 
 _ = load_dotenv(find_dotenv()) # read local .env file
 openai.api_key = os.environ['OPENAI_API_KEY']
@@ -288,11 +289,11 @@ class MindMap:
                     # a little bit bigger if selected
                     size=10+10*(n==selected), 
                     # a different color if selected
-                    color=COLOR if n != selected else FOCUS_COLOR
+                    color=COLOR if n == 0 else FOCUS_COLOR,
                 ) 
                 for n in self.nodes
             ]
-            vis_edges = [Edge(source=a, target=b) for a, b in self.edges]
+            vis_edges = [Edge(source=a, target=b, color=EDGE_COLOR) for a, b in self.edges]
             config = Config(width="100%",
                             height=600,
                             directed=False, 
@@ -311,7 +312,9 @@ class MindMap:
 def main():
     # will initialize the graph from session state
     # (if it exists) otherwise will create a new one
+    
     mindmap = MindMap.load()
+    
     st.markdown("""
     <style>
     .stButton button {

@@ -7,5 +7,5 @@ matplotlib==3.5.1
 networkx==3.1
 python-dotenv==1.0.0
 streamlit_agraph==0.0.45
-PyPDF2==1.26.0
+PyPDF2==3.0.1
 python-pptx==0.6.19

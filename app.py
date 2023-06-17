@@ -7,12 +7,13 @@ sys.path.insert(1, 'Eslam')
 sys.path.insert(2, 'mariam')
 from Eslam_main import GenerateSummary
 
-st.set_page_config(page_title="Study Sync", page_icon=":open_book:")
+st.set_page_config(page_title="Study Sync", page_icon="img\icon.png")
 
 def style():
     st.markdown(
         """
         <style>
+            
             [data-testid="stAppViewContainer"] {
                 background: linear-gradient(220deg, #fbeaf7,#ffffff, #dfeefb);
                 color: black;
@@ -158,7 +159,7 @@ def GENERATE():
                 with st.spinner(text="Generating Summary..."):
                     st.write(GenerateSummary(input_type, output_type, content))
     
-    elif input_type == 1: # Presentation
+    elif input_type == 1: # Pdf
         
         uploaded_file = st.file_uploader('')
 

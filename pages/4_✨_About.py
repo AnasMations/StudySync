@@ -1,6 +1,7 @@
 import streamlit as st
 
 def about_section():
+    st.set_page_config(page_title="About", page_icon="img\icon.png")
     st.markdown(
         """
         <div style="background-color:#f9f9f9;padding:20px;border-radius:10px;">
@@ -11,7 +12,7 @@ def about_section():
                 exceptional user experiences.
             </p>
             <div style="display:flex;justify-content:center;margin-top:30px;">
-                <img src="https://github.com/AnasMations/StudySync/blob/main/img/Study%20Sync%20BG.png?raw=true" alt="Logo" width="300" height="300" style="border-radius:10px;">
+                <img src="https://github.com/AnasMations/StudySync/blob/main/img/Study%20Sync.png?raw=true" alt="Logo" width="300" style="border-radius:10px;">
             </div>
             <h2 style="text-align:center;color:#333;margin-top:40px;">Meet the Team</h2>
             <div style="display:flex;justify-content:center;margin-top:30px;">
