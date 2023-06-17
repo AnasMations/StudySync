@@ -1,22 +1,18 @@
+#================================================================ Importing ===================================================================
 from __future__ import annotations
 import re
-from typing import Optional, Tuple, List, Union, Literal
-import base64
-import matplotlib.pyplot as plt
-import networkx as nx
+from typing import Optional, Tuple, List, Literal
 import streamlit as st
-from streamlit.delta_generator import DeltaGenerator
 import os
-import sys
 import openai
-import graphviz
 from dataclasses import dataclass, asdict
 from textwrap import dedent
 from streamlit_agraph import agraph, Node, Edge, Config
 from dotenv import load_dotenv, find_dotenv
 
+#======================================================= basic config =======================================================================
 # set title of page (will be seen in tab) and the width
-st.set_page_config(page_title="AI Mindmap", page_icon="img\icon.png", layout="wide")
+st.set_page_config(page_title="AI Mindmap", page_icon="https://github.com/AnasMations/StudySync/blob/36ae1cad78544b8a07239d1cefa141a59f6305c8/img/icon.png?raw=true", layout="wide")
 
 COLOR = "#6dbbbd"
 FOCUS_COLOR = "#b9359a"
@@ -24,7 +20,9 @@ EDGE_COLOR = "#b9359a"
 
 _ = load_dotenv(find_dotenv()) # read local .env file
 openai.api_key = os.environ['OPENAI_API_KEY']
+col1, col2= st.columns([1, 2])
 
+#=================================================== basic functions of gpt ========================================================================
 @dataclass
 class Message:
     """A class that represents a message in a ChatGPT conversation.
@@ -96,7 +94,7 @@ def ask_chatgpt(conversation: List[Message]) -> Tuple[str, List[Message]]:
     msg = Message(**response["choices"][0]["message"])
     # return the text output and the new conversation
     return msg.content, conversation + [msg]
-
+#========================================================= Mindmap ==============================================================================
 class MindMap:
     """A class that represents a mind map as a graph.
     """
@@ -252,24 +250,27 @@ class MindMap:
         self.save()
 
     def _add_expand_delete_buttons(self, node) -> None:
-        st.sidebar.subheader(node)
-        cols = st.sidebar.columns(2)
-        cols[0].button(
+            st.subheader(node)
+            # Create a container for the buttons
+
+
+            # Display the buttons in the container
+            st.button(
             label="Expand", 
             on_click=self.ask_for_extended_graph,
             key=f"expand_{node}",
             # pass to on_click (self.ask_for_extended_graph)
             kwargs={"selected_node": node}
-        )
-        cols[1].button(
+            )
+            st.button(
             label="Delete", 
             on_click=self._delete_node,
             type="primary",
             key=f"delete_{node}",
             # pass on to _delete_node
             args=(node,)
-        )
-
+            )
+# ======================================================== Visualization =============================================================================
     def visualize(self, graph_type: Literal["agraph", "networkx", "graphviz"]) -> None:
         """Visualize the mindmap as a graph a certain way depending on the `graph_type`.
 
@@ -295,7 +296,7 @@ class MindMap:
             ]
             vis_edges = [Edge(source=a, target=b, color=EDGE_COLOR) for a, b in self.edges]
             config = Config(width="100%",
-                            height=600,
+                            height=400,
                             directed=False, 
                             physics=True,
                             hierarchical=False,
@@ -305,10 +306,11 @@ class MindMap:
                             edges=vis_edges, 
                             config=config)
             # if clicked, update the sidebar with a button to create it
+            
             if clicked_node is not None:
                 self._add_expand_delete_buttons(clicked_node)
-            return
-
+                return
+#===================================================================== Main ===============================================================
 def main():
     # will initialize the graph from session state
     # (if it exists) otherwise will create a new one
@@ -322,61 +324,67 @@ def main():
         color: white;
         border-color: transparent;  /* Set the border color to transparent */
     }
-   [data-testid="stSidebar"] {
-                background: linear-gradient(220deg, #fbeaf7,#ffffff, #dfeefb);
-                color: black;
-            }
+
     .stButton button:hover {
         background-color: #ffffff;  /* Retain the same color when hovering */
-        border-color: transparent;;  /* Set the border color to transparent */
-        color: #b9359a;
+        border-color:#b9359a ;  /* Set the border color to transparent */
+        color:  #b9359a;
 
      .stTextArea > div > textarea {
         border-color: #6dbbbd; /* Change to your desired color */
+        background-color: #6dbbbd;  /* Retain the same color when hovering */
         color: white;
+    .header {
+    font-size: 20px;  /* Set the desired font size */
+    }
+    .button-container {
+    display: flex;
+    }
     }
     }
     }
     </style>
     """, unsafe_allow_html=True)
+
+    with col1:
+        st.image("https://raw.githubusercontent.com/AnasMations/StudySync/main/img/Study%20Sync.png", width=200)
+        st.markdown("<h4 class='header'>AI Mind Map Generator</h4>", unsafe_allow_html=True)
+      
+        empty = mindmap.is_empty()
+        reset = empty or st.checkbox("Reset mind map", value=False)
+        query = st.text_area(
+            "**Describe your mind map**" if reset else "**Describe how to change your mind map**", 
+            value=st.session_state.get("mindmap-input", ""),
+            key="mindmap-input",
+            height=150,
+            placeholder="Generate a mindmap for sorting algorithms in computer science",
+        )
+        submit = st.button("Submit")
+
+    with col2:
+        graph_type = "agraph"
     
-    st.sidebar.image("https://raw.githubusercontent.com/AnasMations/StudySync/main/img/Study%20Sync.png", width=200)
+        valid_submission = submit and query != ""
 
-    st.sidebar.title("StudySync AI Mind Map Generator")
+        if empty and not valid_submission:
+            return
 
-    graph_type = "agraph"
-    
-    empty = mindmap.is_empty()
-    reset = empty or st.sidebar.checkbox("Reset mind map", value=False)
-    query = st.sidebar.text_area(
-        "Describe your mind map" if reset else "Describe how to change your mind map", 
-        value=st.session_state.get("mindmap-input", ""),
-        key="mindmap-input",
-        height=200
-    )
-
-
-    submit = st.sidebar.button("Submit")
-
-    valid_submission = submit and query != ""
-
-    if empty and not valid_submission:
-        return
-
-    with st.spinner(text="Loading graph..."):
-        # if submit and non-empty query, then update graph
-        if valid_submission:
-            if reset:
-                # completely new mindmap
-                mindmap.ask_for_initial_graph(query=query)
+        with st.spinner(text="Loading graph..."):
+            # if submit and non-empty query, then update graph
+            if valid_submission:
+                if reset:
+                    # completely new mindmap
+                    mindmap.ask_for_initial_graph(query=query)
+                else:
+                    # extend existing mindmap
+                    mindmap.ask_for_extended_graph(text=query)
+                # since inputs also have to be updated, everything
+                # is rerun
+                st.experimental_rerun()
             else:
-                # extend existing mindmap
-                mindmap.ask_for_extended_graph(text=query)
-            # since inputs also have to be updated, everything
-            # is rerun
-            st.experimental_rerun()
-        else:
-            mindmap.visualize(graph_type)
+                mindmap.visualize(graph_type)
+
+  
 
 if __name__ == "__main__":
     main()
