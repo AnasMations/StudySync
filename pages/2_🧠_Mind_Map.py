@@ -16,7 +16,7 @@ from streamlit_agraph import agraph, Node, Edge, Config
 from dotenv import load_dotenv, find_dotenv
 
 # set title of page (will be seen in tab) and the width
-st.set_page_config(page_title="AI Mindmap", page_icon="https://github.com/AnasMations/StudySync/blob/36ae1cad78544b8a07239d1cefa141a59f6305c8/img/icon.png?raw=true", layout="wide")
+st.set_page_config(page_title="AI Mindmap", page_icon="img\icon.png", layout="wide")
 
 COLOR = "#6dbbbd"
 FOCUS_COLOR = "#b9359a"
@@ -289,7 +289,7 @@ class MindMap:
                     # a little bit bigger if selected
                     size=10+10*(n==selected), 
                     # a different color if selected
-                    color=COLOR if n == 0 else FOCUS_COLOR,
+                    color=COLOR if n != selected else FOCUS_COLOR,
                 ) 
                 for n in self.nodes
             ]
