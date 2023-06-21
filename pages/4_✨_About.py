@@ -17,7 +17,7 @@ def about_section():
             <h2 style="text-align:center;color:#333;margin-top:40px;">Meet the Team</h2>
             <div style="display:flex;justify-content:center;margin-top:30px;">
                 <div style="text-align:center;margin-right:40px;">
-                    <img src="https://scontent.fcai19-6.fna.fbcdn.net/v/t39.30808-6/307515015_2657884574342657_6966984511757276880_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=174925&_nc_ohc=BMbSG5el4UMAX9PWN46&_nc_ht=scontent.fcai19-6.fna&oh=00_AfBU7GJGNrTU8y-w7RzeC_mx5uH7XVMxdH1q3o6DL8q_jg&oe=649198C0" alt="Eslam Mohamed" width="150" height="150" style="border-radius:50%;">
+                    <img src="https://scontent.fcai1-2.fna.fbcdn.net/v/t39.30808-6/307515015_2657884574342657_6966984511757276880_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=174925&_nc_ohc=3owmGFk9m4QAX_KQJId&_nc_ht=scontent.fcai1-2.fna&oh=00_AfAANbUu_oElGYUfNgyPFvNPKcAG5167-lj8YIDJ59eYiQ&oe=64978780" alt="Eslam Mohamed" width="150" height="150" style="border-radius:50%;">
                     <h3 style="color:#333;margin-top:10px;">Eslam Mohamed</h3>
                     <p style="color:#666;">Data Scientist</p>
                     <div>
